@@ -16,9 +16,7 @@
       </button>
       
       <!-- 로고 -->
-      <NuxtLink to="/main" class="text-grey-900 no-underline">
-        <h1 class="text-2xl font-bold py-3 ml-8">BIBLE STORY</h1>
-      </NuxtLink>
+      <h1 class="text-grey-900 no-underline text-2xl font-bold py-3 ml-8">BIBLE STORY</h1>
     </div>
 
     <!-- 네비게이션 영역 (중앙) -->

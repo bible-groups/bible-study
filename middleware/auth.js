@@ -12,19 +12,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return
   }
 
-  // 1. 로그인/회원가입 페이지 체크
+  // 1. 로그인/회원가입 페이지로 접근 시 처리
   if (['/login', '/signup'].includes(to.path)) {
-    if (authStore.authenticated) {      
-      // 디버깅 시 불필요한 로그를 정리
-      nextTick(() => { 
-        console.clear()
-      })      
-
-      // 메인 페이지로 리다이렉트
-      return navigateTo('/', {
-        replace: true,
-        immediate: true
-      })
+    if (authStore.authenticated) {
+      // 이미 로그인된 상태라면 언제든지 메인으로 이동
+      return navigateTo('/main', { replace: true })
     }
     return
   }
@@ -43,5 +35,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         redirect: to.fullPath
       }
     })
+  }
+
+  // 3. 로그인된 상태에서 인증이 필요하지 않은 공개 페이지로 이동 시 메인으로 이동
+  // 공개 페이지 목록을 필요 최소로 지정. (index, about 등 실제 공개 페이지만 추가)
+  const publicPages = new Set(['/','/about'])
+  if (authStore.authenticated && publicPages.has(to.path)) {
+    return navigateTo('/main', { replace: true })
   }
 })
