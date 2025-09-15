@@ -1,5 +1,5 @@
 <template>
-  <div class="max-h-screen overflow-y-auto">
+  <div class="min-h-screen">
     <div class="container mx-auto px-4 py-8">
       <!-- 페이지 헤더 -->
       <div class="text-center mb-8">
@@ -132,8 +132,8 @@
                   <td class="w-48 px-6 py-4 text-sm text-center text-gray-900">{{ row.description }}</td>
                   <td class="w-20 px-6 py-4 whitespace-nowrap text-center">
                     <div class="flex justify-center space-x-2">
-                      <button @click="openModal(row)" class="text-gray-600 hover:text-gray-900"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
-                      <button @click="deleteRow(row.id)" class="text-gray-600 hover:text-gray-900"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                      <button @click="openModal(row)" class="text-blue-500 hover:text-blue-900 text-lg"><i class="fa fa-pencil-square-o fa-fw"></i></button>
+                      <button @click="deleteRow(row.id)" class="text-red-400 hover:text-red-900 text-lg"><i class="fa fa-trash fa-fw"></i></button>
                     </div>
                   </td>
                 </tr>
@@ -149,14 +149,16 @@
         <!-- 페이지네이션 -->
         <div v-if="allFilteredRows.length > 0 && totalPages > 1" class="flex justify-center mt-8">
           <nav class="flex items-center space-x-1">
-            <!-- 이전 페이지 -->
-            <button :disabled="currentPage <= 1" @click="goToPage(currentPage - 1)" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentPage <= 1 ? 'text-gray-400 cursor-not-allowed' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+            <!-- 이전 10개 페이지 그룹 이동 -->
+            <button :disabled="currentGroup <= 1" @click="goToPrevGroup" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentGroup <= 1 ? 'text-gray-300 cursor-not-allowed' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']" title="이전 10페이지">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
             
             <!-- 페이지 번호들 -->
             <button v-for="page in visiblePages" :key="page" @click="goToPage(page)" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentPage === page ? 'bg-indigo-100 text-indigo-700 font-semibold' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']">{{ page }}</button>
             
-            <!-- 다음 10개 페이지 -->
-            <button v-if="currentGroup < totalGroups" @click="goToNextGroup" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']" title="다음 10페이지">
+            <!-- 다음 10개 페이지 그룹 이동 -->
+            <button :disabled="currentGroup >= totalGroups" @click="goToNextGroup" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentGroup >= totalGroups ? 'text-gray-300 cursor-not-allowed' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']" title="다음 10페이지">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             </button>
           </nav>
@@ -307,6 +309,23 @@ const toTimestampFromDateInput = (yyyyMmDd) => { try { const d = new Date(yyyyMm
 const formatDate = (ts) => { try { let d; if (!ts) return ''; if (ts.toDate) d = ts.toDate(); else if (ts.seconds) d = new Date(ts.seconds*1000); else d = new Date(ts); return d.toLocaleDateString('ko-KR', { year:'numeric', month:'2-digit', day:'2-digit' }) } catch(e){ return '' } }
 const formatCurrency = (n) => new Intl.NumberFormat('ko-KR').format(Number(n||0)) + '원'
 
+// 날짜 입력용(YYYY-MM-DD) 로컬 기준 포맷터 - toISOString() 사용 금지(UTC로 밀림 방지)
+const toYmdLocal = (dateLike) => {
+  try {
+    let d
+    if (!dateLike) return ''
+    if (dateLike.toDate) d = dateLike.toDate()
+    else if (dateLike.seconds) d = new Date(dateLike.seconds * 1000)
+    else d = new Date(dateLike)
+    const y = d.getFullYear()
+    const m = String(d.getMonth() + 1).padStart(2, '0')
+    const da = String(d.getDate()).padStart(2, '0')
+    return `${y}-${m}-${da}`
+  } catch (e) {
+    return ''
+  }
+}
+
 onMounted(async () => { console.log('[PAGE] ledger mounted'); await loadRowsFromFirebase() })
 
 const loadRowsFromFirebase = async () => {
@@ -451,7 +470,7 @@ const openModal = (row) => {
   
   editForm.value = { 
     cash_flow: mappedCashFlow, 
-    date: new Date(formatDate(row.date)).toISOString().slice(0,10), 
+    date: toYmdLocal(row.date), 
     amount: row.amount, 
     merchant: row.merchant, 
     payment_method: row.payment_method, 

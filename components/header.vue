@@ -1,6 +1,6 @@
 <template>
   <!-- App Bar : Header Area -->
-  <div class="bg-white shadow-md h-[70px] flex items-center px-4" v-if="currentView !== 'IntroView'">
+  <div class="bg-white shadow-md h-[70px] flex items-center px-4 fixed top-0 left-0 right-0 w-full z-50" v-if="currentView !== 'IntroView'">
 
     <!-- 로고 영역 (좌측) -->
     <div class="flex items-center flex-grow">
@@ -92,6 +92,8 @@
       </NuxtLink> -->
     </div>
   </div>
+  <!-- 고정 헤더로 인해 가려지는 컨텐츠 보정용 스페이서 -->
+  <div class="h-[70px]" v-if="currentView !== 'IntroView'"></div>
 </template>
 
 <script setup>

@@ -1,5 +1,5 @@
 <template>
-  <div class="max-h-screen overflow-y-auto">
+  <div class="min-h-screen">
     <div class="container mx-auto px-4 py-8">
       <!-- 페이지 헤더 -->
       <div class="text-center mb-8">
@@ -226,71 +226,11 @@
       </div>
 
       <!-- 페이지네이션 -->
-      <div v-if="allFilteredMeditations.length > 0 && totalPages > 1" class="flex justify-center mt-8">
+      <div v-if="allFilteredMeditations.length > 0" class="flex justify-center mt-8">
         <nav class="flex items-center space-x-1">
-          <!-- 이전 버튼 -->
-          <button 
-            :disabled="currentPage <= 1"
-            @click="goToPage(currentPage - 1)"
-            :class="[
-              'w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors',
-              currentPage <= 1 
-                ? 'text-gray-400 cursor-not-allowed' 
-                : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700'
-            ]"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-          </button>
-          
-          <!-- 페이지 번호들 -->
-          <button
-            v-for="page in visiblePages"
-            :key="page"
-            @click="goToPage(page)"
-            :class="[
-              'w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors',
-              currentPage === page
-                ? 'bg-indigo-100 text-indigo-700 font-semibold'
-                : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700'
-            ]"
-          >
-            {{ page }}
-          </button>
-          
-          <!-- 생략 표시 -->
-          <span v-if="totalPages > 6 && currentPage < totalPages - 2" class="px-2 py-1 text-gray-400 text-sm">...</span>
-          
-          <!-- 마지막 페이지 -->
-          <button 
-            v-if="totalPages > 6 && currentPage < totalPages - 2"
-            @click="goToPage(totalPages)"
-            :class="[
-              'w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors',
-              currentPage === totalPages
-                ? 'bg-indigo-100 text-indigo-700 font-semibold'
-                : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700'
-            ]"
-          >
-            {{ totalPages }}
-          </button>
-          
-          <!-- 다음 버튼 -->
-          <button 
-            :disabled="currentPage >= totalPages"
-            @click="goToPage(currentPage + 1)"
-            :class="[
-              'w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors',
-              currentPage >= totalPages 
-                ? 'text-gray-400 cursor-not-allowed' 
-                : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700'
-            ]"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </button>
+          <button :disabled="currentGroup <= 1" @click="goToPrevGroup" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentGroup <= 1 ? 'text-gray-300 cursor-not-allowed' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+          <button v-for="page in visiblePages" :key="page" @click="goToPage(page)" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentPage === page ? 'bg-indigo-100 text-indigo-700 font-semibold' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']">{{ page }}</button>
+          <button :disabled="currentGroup >= totalGroups" @click="goToNextGroup" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentGroup >= totalGroups ? 'text-gray-300 cursor-not-allowed' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
         </nav>
       </div>
 
@@ -484,6 +424,8 @@ const adding = ref(false)
 // 페이지네이션 관련
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
+const pagesPerGroup = ref(10)
+const currentGroup = ref(1)
 
 // Firebase에서 묵상 데이터 가져오기
 const meditations = ref([])
@@ -587,6 +529,7 @@ const allFilteredMeditations = computed(() => {
 
 // 페이지네이션 계산
 const totalPages = computed(() => Math.ceil(allFilteredMeditations.value.length / itemsPerPage.value))
+const totalGroups = computed(() => Math.ceil(totalPages.value / pagesPerGroup.value))
 const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage.value)
 const endIndex = computed(() => startIndex.value + itemsPerPage.value)
 
@@ -598,12 +541,9 @@ const filteredMeditations = computed(() => {
 // 페이지네이션 표시용 페이지 번호들
 const visiblePages = computed(() => {
   const pages = []
-  const start = Math.max(1, currentPage.value - 2)
-  const end = Math.min(totalPages.value, currentPage.value + 2)
-  
-  for (let i = start; i <= end; i++) {
-    pages.push(i)
-  }
+  const start = (currentGroup.value - 1) * pagesPerGroup.value + 1
+  const end = Math.min(currentGroup.value * pagesPerGroup.value, totalPages.value)
+  for (let i = start; i <= end; i++) pages.push(i)
   return pages
 })
 
@@ -655,7 +595,22 @@ const calculateRows = (text) => {
 const goToPage = (page) => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page
+    currentGroup.value = Math.ceil(page / pagesPerGroup.value)
     selectedMeditationId.value = null // 페이지 변경시 선택 해제
+  }
+}
+
+const goToNextGroup = () => {
+  if (currentGroup.value < totalGroups.value) {
+    currentGroup.value++
+    currentPage.value = (currentGroup.value - 1) * pagesPerGroup.value + 1
+  }
+}
+
+const goToPrevGroup = () => {
+  if (currentGroup.value > 1) {
+    currentGroup.value--
+    currentPage.value = (currentGroup.value - 1) * pagesPerGroup.value + 1
   }
 }
 
