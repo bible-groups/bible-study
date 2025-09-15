@@ -27,7 +27,8 @@ export default defineNuxtConfig({
         { name: 'msapplication-config', content: '/browserconfig.xml' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/bible-favicon.ico' }
+        { rel: 'icon', type: 'image/x-icon', href: '/bible-favicon.ico' },
+        { rel: 'manifest', href: '/manifest.json' }
       ]
     },
   },
@@ -49,7 +50,8 @@ export default defineNuxtConfig({
   ],
   plugins: [
     '~/plugins/firebase.js',
-    '~/plugins/auth.client.js'
+    '~/plugins/auth.client.js',
+    '~/plugins/sw.client.js'
   ],
   modules: [     
     '@pinia/nuxt'
