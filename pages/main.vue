@@ -1,5 +1,5 @@
 <template>
-  <div class="main-page">
+  <div class="main-page min-h-screen">
 
     <!-- 메인 컨텐츠 -->
     <main class="w-full px-0 py-8 lg:container lg:mx-auto lg:max-w-7xl lg:px-4 flex-1">
@@ -24,7 +24,7 @@
 
 
             <!-- 묵상 목록 -->
-            <div v-else-if="filteredMeditations.length > 0" class="bg-indigo-50 py-5 min-h-[400px] md:min-h-[536px]">
+            <div v-else-if="filteredMeditations.length > 0" class="bg-indigo-50 py-5">
               <div
                 v-for="(meditation, index) in paginatedMeditations"
                 :key="meditation.id"
@@ -53,7 +53,7 @@
             </div>
 
             <!-- 데이터가 없을 때 -->
-            <div v-else class="text-center py-12 min-h-[400px] md:min-h-[536px] flex flex-col justify-center">
+            <div v-else class="text-center py-12 flex flex-col justify-center">
               <div class="text-gray-400 mb-4">
                 <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.515-.751-6.281-2.02M12 15c2.34 0 4.515-.751 6.281-2.02M12 3v12"></path>
@@ -281,7 +281,7 @@
             </div>
 
             <!-- 블로그 목록 -->
-            <div v-else-if="displayBlogs.length > 0" class="bg-indigo-50 py-5 min-h-[400px] md:min-h-[536px]">
+            <div v-else-if="displayBlogs.length > 0" class="bg-indigo-50 py-5">
               <div
                 v-for="(blog, index) in paginatedBlogs"
                 :key="blog.id"
@@ -311,7 +311,7 @@
             </div>
 
             <!-- 데이터가 없을 때 -->
-            <div v-else class="text-center py-12 min-h-[400px] md:min-h-[536px] flex flex-col justify-center">
+            <div v-else class="text-center py-12 flex flex-col justify-center">
               <div class="text-gray-400 mb-4">
                 <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.515-.751-6.281-2.02M12 15c2.34 0 4.515-.751 6.281-2.02M12 3v12"></path>
@@ -523,15 +523,12 @@
       </div>
     </main>
 
-    <!-- 좌측 배경 오버레이 -->
-    <div v-if="modalOpen" class="fixed left-0 top-0 w-1/2 h-full bg-black/0 z-30"></div>
-    
-    <!-- 우측 배경 오버레이 -->
-    <div v-if="blogModalOpen" class="fixed right-0 top-0 w-1/2 h-full bg-black/0 z-30"></div>
+    <!-- 통합 배경 오버레이 -->
+    <div v-if="modalOpen || blogModalOpen" class="fixed left-0 top-0 w-full h-full bg-black/0 z-30 pointer-events-none"></div>
 
     <!-- 묵상 상세 모달 -->
-    <div v-if="modalOpen" class="fixed left-3 top-7 w-1/2 h-full flex items-center justify-center z-40 p-4">
-      <div class="bg-white rounded-lg shadow-xl w-full h-[90vh] overflow-hidden flex flex-col border border-gray-200">
+    <div v-if="modalOpen" class="fixed left-3 top-[-5px] w-1/2 h-full flex items-center justify-center z-50 p-4 pointer-events-auto">
+      <div class="bg-white rounded-lg shadow-xl w-full h-full max-h-[calc(98dvh-145px)] overflow-hidden flex flex-col border border-gray-200">
         <!-- 모달 헤더 -->
         <div class="flex justify-between items-center p-6 border-b border-gray-200">
           <div class="flex-1 pr-4">
@@ -555,8 +552,8 @@
           </div>
         </div>
 
-        <!-- 묵상 내용 영역 (60% 고정) -->
-        <div class="p-6 overflow-y-auto" style="height: 60vh;">
+        <!-- 묵상 내용 영역 (스크롤 가능) -->
+        <div class="p-6 overflow-y-auto flex-1">
           <div class="mb-6">
             <label class="block text-base font-bold text-gray-700 mb-2">묵상 내용</label>
             <textarea 
@@ -652,8 +649,8 @@
     </div>
 
     <!-- 블로그 상세 모달 -->
-    <div v-if="blogModalOpen" class="fixed right-3 top-7 w-1/2 h-full flex items-center justify-center z-50 p-4">
-      <div class="bg-white rounded-lg shadow-xl w-full h-[90vh] overflow-hidden flex flex-col border border-gray-200">
+    <div v-if="blogModalOpen" class="fixed right-3 top-[-5px] w-1/2 h-full flex items-center justify-center z-50 p-4 pointer-events-auto">
+      <div class="bg-white rounded-lg shadow-xl w-full h-full max-h-[calc(98dvh-145px)] overflow-hidden flex flex-col border border-gray-200">
         <!-- 모달 헤더 -->
         <div class="flex justify-between items-center p-6 border-b border-gray-200">
           <div class="flex-1 pr-4">
@@ -677,8 +674,8 @@
           </div>
         </div>
 
-        <!-- 블로그 내용 영역 (60% 고정) -->
-        <div class="p-6 overflow-y-auto" style="height: 60vh;">
+        <!-- 블로그 내용 영역 (스크롤 가능) -->
+        <div class="p-6 overflow-y-auto flex-1">
           <div class="mb-6">
             <label class="block text-base font-bold text-gray-700 mb-2">블로그 내용</label>
             <textarea 
@@ -1605,6 +1602,7 @@ nav button:disabled {
   .main-page {
     max-height: none !important;
     overflow-y: visible !important;
+    min-height: 100vh !important;
   }
   
   main {
@@ -1635,14 +1633,15 @@ nav button:disabled {
     width: 100% !important;
     left: 0 !important;
     right: 0 !important;
+    pointer-events: auto !important;
   }
   
-  /* 배경 오버레이도 100%로 변경 */
-  .fixed.left-0.top-0.w-1\/2,
-  .fixed.right-0.top-0.w-1\/2 {
+  /* 통합 배경 오버레이 */
+  .fixed.left-0.top-0.w-full {
     width: 100% !important;
     left: 0 !important;
     right: 0 !important;
+    pointer-events: none !important;
   }
 }
 

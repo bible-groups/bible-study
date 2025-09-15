@@ -1,5 +1,5 @@
 <template>
-  <div class="max-h-screen overflow-y-auto">
+  <div class="min-h-screen">
     <div class="container mx-auto px-4 py-8">
       <!-- 페이지 헤더 -->
       <div class="text-center mb-8">

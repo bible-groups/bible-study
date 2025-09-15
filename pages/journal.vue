@@ -36,7 +36,7 @@
       </div>
 
       <!-- 검색 영역 -->
-      <div class="max-w-md mx-auto mb-8">
+      <div class="max-w-6xl mx-auto mb-8">
         <div class="relative">
           <input 
             v-model="searchTerm"
@@ -70,7 +70,7 @@
       </div>
 
       <!-- 일기 추가 폼 -->
-      <div v-if="viewMode === 'add'" class="w-full mb-8">
+      <div v-if="viewMode === 'add'" class="max-w-6xl mx-auto mb-8">
         <div class="bg-white rounded-lg shadow-md p-6">
           <h2 class="text-xl font-semibold text-gray-800 mb-6">새 일기 추가</h2>
           <form @submit.prevent="addNewEntry" class="space-y-4">
@@ -120,7 +120,7 @@
       </div>
 
       <!-- 일기 목록 -->
-      <div v-else-if="viewMode === 'list'" class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+      <div v-else-if="viewMode === 'list'" class="max-w-6xl mx-auto bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
         <div
           v-for="(entry, index) in filteredEntries"
           :key="entry.id"
@@ -163,7 +163,7 @@
       </div>
 
       <!-- 페이지네이션 -->
-      <div v-if="allFilteredEntries.length > 0" class="flex justify-center mt-8">
+      <div v-if="allFilteredEntries.length > 0" class="max-w-6xl mx-auto flex justify-center mt-8">
         <nav class="flex items-center space-x-1">
           <button :disabled="currentGroup <= 1" @click="goToPrevGroup" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentGroup <= 1 ? 'text-gray-300 cursor-not-allowed' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
           <button v-for="page in visiblePages" :key="page" @click="goToPage(page)" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentPage === page ? 'bg-indigo-100 text-indigo-700 font-semibold' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']">{{ page }}</button>
@@ -172,7 +172,7 @@
       </div>
 
       <!-- 데이터가 없을 때 -->
-      <div v-if="!loading && allFilteredEntries.length === 0" class="text-center py-12">
+      <div v-if="!loading && allFilteredEntries.length === 0" class="max-w-6xl mx-auto text-center py-12">
         <div class="text-gray-400 mb-4">
           <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.515-.751-6.281-2.02M12 15c2.34 0 4.515-.751 6.281-2.02M12 3v12"></path></svg>
         </div>

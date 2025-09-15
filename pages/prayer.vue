@@ -16,7 +16,7 @@
       </div>
 
       <!-- 검색 영역 -->
-      <div class="max-w-md mx-auto mb-8">
+      <div class="max-w-6xl mx-auto mb-8">
         <div class="relative">
           <input v-model="searchTerm" type="text" placeholder="기도 내용을 검색하세요..." class="w-full px-4 py-3 pr-20 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
           <div class="absolute inset-y-0 right-0 flex items-center pr-3 space-x-2">
@@ -29,7 +29,7 @@
       </div>
 
       <!-- 기도 추가 폼 -->
-      <div v-if="viewMode === 'add'" class="w-full mb-8">
+      <div v-if="viewMode === 'add'" class="max-w-6xl mx-auto mb-8">
         <div class="bg-white rounded-lg shadow-md p-6">
           <h2 class="text-xl font-semibold text-gray-800 mb-6">새 기도 추가</h2>
           <form @submit.prevent="addNewPrayer" class="space-y-4">
@@ -64,7 +64,7 @@
       </div>
 
       <!-- 기도 목록 -->
-      <div v-else-if="viewMode === 'list'" class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+      <div v-else-if="viewMode === 'list'" class="max-w-6xl mx-auto bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
         <div v-for="(prayer, index) in filteredPrayers" :key="prayer.id" :class="['border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer', index === filteredPrayers.length - 1 ? 'border-b-0' : '']" @click="openModal(prayer)">
           <div class="p-6">
             <div class="flex items-start space-x-4">
@@ -94,7 +94,7 @@
       </div>
 
       <!-- 페이지네이션 -->
-      <div v-if="allFilteredPrayers.length > 0" class="flex justify-center mt-8">
+      <div v-if="allFilteredPrayers.length > 0" class="max-w-6xl mx-auto flex justify-center mt-8">
         <nav class="flex items-center space-x-1">
           <button :disabled="currentGroup <= 1" @click="goToPrevGroup" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentGroup <= 1 ? 'text-gray-300 cursor-not-allowed' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
           <button v-for="page in visiblePages" :key="page" @click="goToPage(page)" :class="['w-8 h-8 flex items-center justify-center rounded-md text-sm font-medium transition-colors', currentPage === page ? 'bg-indigo-100 text-indigo-700 font-semibold' : 'text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700']">{{ page }}</button>
@@ -103,7 +103,7 @@
       </div>
 
       <!-- 데이터가 없을 때 -->
-      <div v-if="!loading && allFilteredPrayers.length === 0" class="text-center py-12">
+      <div v-if="!loading && allFilteredPrayers.length === 0" class="max-w-6xl mx-auto text-center py-12">
         <div class="text-gray-400 mb-4"><svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg></div>
         <p class="text-gray-500">등록된 기도가 없습니다.</p>
       </div>

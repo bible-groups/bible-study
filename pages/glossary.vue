@@ -36,7 +36,7 @@
       </div>
 
       <!-- 검색 및 필터 영역 -->
-      <div class="max-w-4xl mx-auto mb-8">
+      <div class="max-w-6xl mx-auto mb-8">
         <div class="flex flex-col xl:flex-row gap-4">
           <!-- 검색창 -->
           <div class="flex-1 relative">
@@ -92,7 +92,7 @@
       </div>
 
       <!-- 용어 추가 폼 -->
-      <div v-if="viewMode === 'add'" class="w-full mb-8">
+      <div v-if="viewMode === 'add'" class="max-w-6xl mx-auto mb-8">
         <div class="bg-white rounded-lg shadow-md p-6">
           <h2 class="text-xl font-semibold text-gray-800 mb-6">새 용어 추가</h2>
           
@@ -202,7 +202,7 @@
       </div>
 
       <!-- 용어 목록 (리스트 형식) -->
-      <div v-else-if="viewMode === 'list'" class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+      <div v-else-if="viewMode === 'list'" class="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
         <div
           v-for="(term, index) in filteredTerms"
           :key="term.id"
@@ -265,7 +265,7 @@
       </div>
 
       <!-- 페이지네이션 -->
-      <div v-if="allFilteredTerms.length > 0" class="flex justify-center mt-8">
+      <div v-if="allFilteredTerms.length > 0" class="max-w-6xl mx-auto flex justify-center mt-8">
         <nav class="flex items-center space-x-1">
           <!-- 이전 10개 그룹 이동 -->
           <button
@@ -295,7 +295,7 @@
       </div>
 
       <!-- 데이터가 없을 때 -->
-      <div v-if="!loading && allFilteredTerms.length === 0" class="text-center py-12">
+      <div v-if="!loading && allFilteredTerms.length === 0" class="max-w-6xl mx-auto text-center py-12">
         <div class="text-gray-400 mb-4">
           <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.515-.751-6.281-2.02M12 15c2.34 0 4.515-.751 6.281-2.02M12 3v12"></path>
