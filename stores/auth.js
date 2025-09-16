@@ -95,6 +95,9 @@ export const useAuthStore = defineStore('auth', {
         return userCredential.user
       } catch (error) {
         console.error('로그인 실패:', error)
+        console.error('에러 코드:', error.code)
+        console.error('에러 메시지:', error.message)
+        console.error('전체 에러 객체:', error)
         throw error
       }
     },
@@ -207,6 +210,34 @@ export const useAuthStore = defineStore('auth', {
         return !querySnapshot.empty
       } catch (error) {
         console.error('이메일 중복 체크 실패:', error)
+        throw error
+      }
+    },
+
+    // 모든 사용자 목록 조회 (디버깅용)
+    async getAllUsers() {
+      const { $db } = useNuxtApp()
+      try {
+        console.log('=== Firestore 사용자 목록 조회 시작 ===')
+        const usersRef = collection($db, 'users')
+        const querySnapshot = await getDocs(usersRef)
+        
+        console.log(`총 ${querySnapshot.size}명의 사용자가 등록되어 있습니다.`)
+        
+        querySnapshot.forEach((doc) => {
+          const userData = doc.data()
+          console.log(`- UID: ${userData.uid}`)
+          console.log(`  이메일: ${userData.email}`)
+          console.log(`  이름: ${userData.name}`)
+          console.log(`  역할: ${userData.role}`)
+          console.log(`  생성일: ${userData.createdAt}`)
+          console.log('---')
+        })
+        
+        console.log('=== Firestore 사용자 목록 조회 완료 ===')
+        return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      } catch (error) {
+        console.error('사용자 목록 조회 실패:', error)
         throw error
       }
     }

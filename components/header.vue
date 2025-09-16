@@ -45,8 +45,8 @@
     <!-- 사용자 메뉴 영역 (우측) -->
     <div class="flex items-center flex-grow justify-end text-right">
       <!-- 환영 메시지 -->
-      <span class="hidden md:block text-gray-700 mr-2" v-if="isLoggedIn && user?.displayName">
-        {{ role === 'admin' ? '이경배 ' : '' }}님, 환영합니다!
+      <span class="hidden lg:block text-gray-700 mr-2" v-if="isLoggedIn && user?.displayName">
+        {{ user.displayName }} 님, 환영합니다!
       </span>
       
       <!-- 홈 버튼 (로그인시) -->
@@ -107,25 +107,25 @@ const authStore = useAuthStore()
 // 반응형 데이터 (store에서 가져오기)
 const user = computed(() => {
   const currentUser = authStore.currentUser
-  console.log('Header - current user:', currentUser)
+  // console.log('Header - current user:', currentUser)
   return currentUser
 })
 const isLoggedIn = computed(() => authStore.isAuthenticated)
 const role = computed(() => {
   const userRole = authStore.currentUserRole
-  console.log('Header - current role:', userRole)
+  // console.log('Header - current role:', userRole)
   return userRole
 })
 const currentView = ref('')
 
 // 디버깅용 - 사용자 정보 변화 감지
 watch([user, role], ([newUser, newRole]) => {
-  console.log('🔵 Header - 사용자 정보 변경:', { 
-    displayName: newUser?.displayName, 
-    email: newUser?.email,
-    role: newRole,
-    fullUser: newUser 
-  })
+  // console.log('🔵 Header - 사용자 정보 변경:', { 
+  //   displayName: newUser?.displayName, 
+  //   email: newUser?.email,
+  //   role: newRole,
+  //   fullUser: newUser 
+  // })
 }, { immediate: true })
 
 // 메뉴 구성 

@@ -16,7 +16,7 @@
           class="bg-indigo-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-600 transition-colors duration-200 flex items-center justify-center gap-2 w-auto max-w-xs mx-auto sm:mx-0"
         >
           시작하기
-        </button>        
+        </button>    
       </div>
     </div>
 

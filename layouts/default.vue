@@ -35,7 +35,7 @@
         <div class="mb-15 p-3 bg-gray-200 rounded-lg" v-if="isLoggedIn && user?.displayName">
           <div class="text-sm text-gray-600 mb-1"></div>
           <div class="font-medium text-gray-800">
-            {{ role === 'admin' ? '이경배 ' : '' }}님 환영합니다!
+            {{ user.displayName }} 님, 환영합니다!
           </div>
         </div>
         
