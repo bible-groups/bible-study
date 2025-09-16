@@ -6,14 +6,14 @@
       </div>
       <h2 class="text-4xl md:text-5xl font-bold mb-6">BIBLE STORY</h2>
       <h3 class="text-[20px] md:text-1xl font-semibold mb-15">말씀속에서 함께하는 여정</h3>
-      <p class="text-xl md:text-lg mb-12 px-4">
+      <p class="text-xl md:text-lg mb-12 px-10 md:px-4">
         말씀속에서 묵상함으로 성경을 더욱 깊이 탐구하고,<br class="hidden md:block"> 
         신앙생활을 더욱 풍성하게 만들어보세요!
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <button 
           @click="showLoginModal = true"
-          class="bg-indigo-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-600 transition-colors duration-200 flex items-center justify-center gap-2"
+          class="bg-indigo-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-600 transition-colors duration-200 flex items-center justify-center gap-2 w-auto max-w-xs mx-auto sm:mx-0"
         >
           시작하기
         </button>        

@@ -36,7 +36,7 @@
       </div>
 
       <!-- 검색 및 필터 영역 -->
-      <div class="max-w-6xl mx-auto mb-8">
+      <div class="w-full lg:max-w-6xl lg:mx-auto mb-8">
         <div class="flex flex-col xl:flex-row gap-4">
           <!-- 검색창 -->
           <div class="flex-1 relative">
@@ -92,7 +92,7 @@
       </div>
 
       <!-- 용어 추가 폼 -->
-      <div v-if="viewMode === 'add'" class="max-w-6xl mx-auto mb-8">
+      <div v-if="viewMode === 'add'" class="w-full lg:max-w-6xl lg:mx-auto mb-8">
         <div class="bg-white rounded-lg shadow-md p-6">
           <h2 class="text-xl font-semibold text-gray-800 mb-6">새 용어 추가</h2>
           
@@ -202,7 +202,7 @@
       </div>
 
       <!-- 용어 목록 (리스트 형식) -->
-      <div v-else-if="viewMode === 'list'" class="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+      <div v-else-if="viewMode === 'list'" class="w-full lg:max-w-6xl lg:mx-auto bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
         <div
           v-for="(term, index) in filteredTerms"
           :key="term.id"
@@ -230,7 +230,7 @@
                   </h3>
                   <div class="flex items-center space-x-2 ml-4">
                     <span class="text-sm text-gray-500">{{ term.createdAt }}</span>
-                    <span class="text-sm text-gray-400">{{ term.author }}</span>
+                    <span class="text-sm text-gray-400 hidden sm:block">{{ term.author }}</span>
                   </div>
                 </div>
                 
@@ -265,7 +265,7 @@
       </div>
 
       <!-- 페이지네이션 -->
-      <div v-if="allFilteredTerms.length > 0" class="max-w-6xl mx-auto flex justify-center mt-8">
+      <div v-if="allFilteredTerms.length > 0" class="w-full lg:max-w-6xl lg:mx-auto flex justify-center mt-8">
         <nav class="flex items-center space-x-1">
           <!-- 이전 10개 그룹 이동 -->
           <button
@@ -295,7 +295,7 @@
       </div>
 
       <!-- 데이터가 없을 때 -->
-      <div v-if="!loading && allFilteredTerms.length === 0" class="max-w-6xl mx-auto text-center py-12">
+      <div v-if="!loading && allFilteredTerms.length === 0" class="w-full lg:max-w-6xl lg:mx-auto text-center py-12">
         <div class="text-gray-400 mb-4">
           <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.515-.751-6.281-2.02M12 15c2.34 0 4.515-.751 6.281-2.02M12 3v12"></path>
@@ -316,7 +316,7 @@
 
     <!-- 용어 상세 모달 -->
     <div v-if="modalOpen" class="fixed inset-0 bg-black/50 flex items-center justify-center z-100 p-4" @click.self="closeModal">
-      <div class="bg-white rounded-lg shadow-xl w-[100vh] max-h-[90vh] overflow-hidden flex flex-col">
+      <div class="bg-white rounded-lg shadow-xl w-full lg:w-6xl max-h-[90vh] overflow-hidden flex flex-col">
         <!-- 모달 헤더 -->
         <div class="flex justify-between items-center p-6 border-b border-gray-200">
           <div class="flex-1 pr-4">
@@ -388,7 +388,7 @@
              <button
                @click="updateTerm"
                :disabled="updating"
-               class="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2 cursor-pointer"
+               class="w-12 h-12 sm:w-auto sm:h-auto sm:px-6 sm:py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center sm:space-x-2 cursor-pointer"
              >
                <svg v-if="updating" class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -396,13 +396,13 @@
                <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                </svg>
-               <span>{{ updating ? '수정 중...' : '수정' }}</span>
+               <span class="hidden sm:inline sm:ml-2">{{ updating ? '수정 중...' : '수정' }}</span>
              </button>
              
              <button
                @click="deleteTerm"
                :disabled="deleting"
-               class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2 cursor-pointer"
+               class="w-12 h-12 sm:w-auto sm:h-auto sm:px-6 sm:py-2 bg-red-500 text-white rounded-lg hover:bg-red-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center sm:space-x-2 cursor-pointer"
              >
                <svg v-if="deleting" class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
@@ -410,17 +410,17 @@
                <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                </svg>
-               <span>{{ deleting ? '삭제 중...' : '삭제' }}</span>
+               <span class="hidden sm:inline sm:ml-2">{{ deleting ? '삭제 중...' : '삭제' }}</span>
              </button>
              
              <button
                @click="closeModal"
-               class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-400 transition-colors flex items-center space-x-2 cursor-pointer"
+               class="w-12 h-12 sm:w-auto sm:h-auto sm:px-6 sm:py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-400 transition-colors flex items-center justify-center sm:space-x-2 cursor-pointer"
              >
                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                </svg>
-               <span>창닫기</span>
+               <span class="hidden sm:inline sm:ml-2">창닫기</span>
              </button>
            </div>
          </div>
