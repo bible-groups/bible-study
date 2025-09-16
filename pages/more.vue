@@ -110,7 +110,7 @@
     </div>
 
     <!-- 상세 모달 -->
-    <div v-if="modalOpen" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click.self="closeModal">
+    <div v-if="modalOpen" class="fixed inset-0 bg-black/50 flex items-center justify-center z-100 p-4" @click.self="closeModal">
       <div class="bg-white rounded-lg shadow-xl w-[100vh] max-h-[90vh] overflow-hidden flex flex-col">
         <div class="flex justify-between items-center p-6 border-b border-gray-200">
           <div class="flex-1 pr-4">

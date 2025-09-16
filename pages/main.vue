@@ -527,8 +527,8 @@
     <div v-if="modalOpen || blogModalOpen" class="fixed left-0 top-0 w-full h-full bg-black/0 z-30 pointer-events-none"></div>
 
     <!-- 묵상 상세 모달 -->
-    <div v-if="modalOpen" class="fixed left-3 top-[-5px] w-1/2 h-full flex items-center justify-center z-50 p-4 pointer-events-auto">
-      <div class="bg-white rounded-lg shadow-xl w-full h-full max-h-[calc(98dvh-145px)] overflow-hidden flex flex-col border border-gray-200">
+    <div v-if="modalOpen" class="fixed left-3 top-[-5px] w-full lg:w-1/2 h-full flex items-center justify-center z-50 p-4 pointer-events-auto lg:left-3 left-0">
+      <div class="bg-white rounded-lg shadow-xl w-full h-full max-h-[calc(98dvh-150px)] overflow-y-auto flex flex-col border border-gray-200">
         <!-- 모달 헤더 -->
         <div class="flex justify-between items-center p-6 border-b border-gray-200">
           <div class="flex-1 pr-4">
@@ -553,13 +553,13 @@
         </div>
 
         <!-- 묵상 내용 영역 (스크롤 가능) -->
-        <div class="p-6 overflow-y-auto flex-1">
+        <div class="p-6 pb-0">
           <div class="mb-6">
             <label class="block text-base font-bold text-gray-700 mb-2">묵상 내용</label>
             <textarea 
               v-model="editBody"
-              :rows="calculateRows(editBody)"
-              class="w-full text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg resize-none transition-all duration-200 leading-relaxed hover:bg-gray-50"
+              rows="12"
+              class="w-full h-[540px] text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg resize-none transition-all duration-200 leading-relaxed hover:bg-gray-50 overflow-y-auto"
               placeholder="묵상 내용을 입력하세요"
             ></textarea>
           </div>
@@ -567,25 +567,27 @@
 
         <!-- 성경 구절과 기도 제목 영역 -->
         <div class="p-6">
-          <!-- 성경 구절 (편집 가능) -->
-          <div class="mb-4">
-            <label class="block text-base font-bold text-gray-700 mb-2">성경 구절</label>
-            <input 
-              v-model="editReference"
-              class="w-full text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg transition-all duration-200 hover:bg-gray-50"
-              placeholder="성경 구절을 입력하세요"
-            >
-          </div>
+          <div class="flex flex-col md:flex-row gap-4">
+            <!-- 성경 구절 (편집 가능) -->
+            <div class="flex-1">
+              <label class="block text-base font-bold text-gray-700 mb-2">성경 구절</label>
+              <input 
+                v-model="editReference"
+                class="w-full text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg transition-all duration-200 hover:bg-gray-50"
+                placeholder="성경 구절을 입력하세요"
+              >
+            </div>
 
-          <!-- 기도 제목 (편집 가능) -->
-          <div class="mb-4">
-            <label class="block text-base font-bold text-gray-700 mb-2">기도 제목</label>
-            <textarea 
-              v-model="editPrayer"
-              :rows="calculateRows(editPrayer)"
-              class="w-full text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg resize-none transition-all duration-200 leading-relaxed hover:bg-gray-50"
-              placeholder="기도 제목을 입력하세요"
-            ></textarea>
+            <!-- 기도 제목 (편집 가능) -->
+            <div class="flex-1">
+              <label class="block text-base font-bold text-gray-700 mb-2">기도 제목</label>
+              <textarea 
+                v-model="editPrayer"
+                rows="2"
+                class="w-full h-[50px] text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg resize-none transition-all duration-200 leading-relaxed hover:bg-gray-50 overflow-y-auto"
+                placeholder="기도 제목을 입력하세요"
+              ></textarea>
+            </div>
           </div>
         </div>
 
@@ -649,8 +651,8 @@
     </div>
 
     <!-- 블로그 상세 모달 -->
-    <div v-if="blogModalOpen" class="fixed right-3 top-[-5px] w-1/2 h-full flex items-center justify-center z-50 p-4 pointer-events-auto">
-      <div class="bg-white rounded-lg shadow-xl w-full h-full max-h-[calc(98dvh-145px)] overflow-hidden flex flex-col border border-gray-200">
+    <div v-if="blogModalOpen" class="fixed right-3 top-[-5px] w-full lg:w-1/2 h-full flex items-center justify-center z-50 p-4 pointer-events-auto lg:right-3 right-0">
+      <div class="bg-white rounded-lg shadow-xl w-full h-full max-h-[calc(98dvh-150px)] overflow-y-auto flex flex-col border border-gray-200">
         <!-- 모달 헤더 -->
         <div class="flex justify-between items-center p-6 border-b border-gray-200">
           <div class="flex-1 pr-4">
@@ -675,13 +677,13 @@
         </div>
 
         <!-- 블로그 내용 영역 (스크롤 가능) -->
-        <div class="p-6 overflow-y-auto flex-1">
+        <div class="p-6 pb-0">
           <div class="mb-6">
             <label class="block text-base font-bold text-gray-700 mb-2">블로그 내용</label>
             <textarea 
               v-model="editBlogBody"
-              :rows="calculateRows(editBlogBody)"
-              class="w-full text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg resize-none transition-all duration-200 leading-relaxed hover:bg-gray-50"
+              rows="12"
+              class="w-full h-[540px] text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg resize-none transition-all duration-200 leading-relaxed hover:bg-gray-50 overflow-y-auto"
               placeholder="블로그 내용을 입력하세요"
             ></textarea>
           </div>
@@ -689,24 +691,27 @@
 
         <!-- 카테고리와 작성자 영역 -->
         <div class="p-6">
-          <!-- 카테고리 (편집 가능) -->
-          <div class="mb-4">
-            <label class="block text-base font-bold text-gray-700 mb-2">카테고리</label>
-            <input 
-              v-model="editBlogCategory"
-              class="w-full text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg transition-all duration-200 hover:bg-gray-50"
-              placeholder="카테고리를 입력하세요"
-            >
-          </div>
+          <div class="flex flex-col md:flex-row gap-4">
+            <!-- 카테고리 (편집 가능) -->
+            <div class="flex-1">
+              <label class="block text-base font-bold text-gray-700 mb-2">카테고리</label>
+              <input 
+                v-model="editBlogCategory"
+                class="w-full text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg transition-all duration-200 hover:bg-gray-50"
+                placeholder="카테고리를 입력하세요"
+              >
+            </div>
 
-          <!-- 작성자 (편집 가능) -->
-          <div class="mb-4">
-            <label class="block text-base font-bold text-gray-700 mb-2">작성자</label>
-            <input 
-              v-model="editBlogAuthor"
-              class="w-full text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg transition-all duration-200 hover:bg-gray-50"
-              placeholder="작성자를 입력하세요"
-            >
+            <!-- 작성자 (편집 가능) -->
+            <div class="flex-1">
+              <label class="block text-base font-bold text-gray-700 mb-2">작성자</label>
+              <textarea 
+                v-model="editBlogAuthor"
+                rows="2"
+                class="w-full h-[50px] text-gray-700 bg-transparent border-none outline-none focus:bg-gray-50 focus:px-3 focus:py-2 focus:border focus:border-gray-300 focus:rounded-lg resize-none transition-all duration-200 leading-relaxed hover:bg-gray-50 overflow-y-auto"
+                placeholder="작성자를 입력하세요"
+              ></textarea>
+            </div>
           </div>
         </div>
 
@@ -1628,8 +1633,8 @@ nav button:disabled {
   }
   
   /* 팝업창 폭을 100%로 변경 */
-  .fixed.left-3.top-7.w-1\/2,
-  .fixed.right-3.top-7.w-1\/2 {
+  .fixed.left-3.top-\[-5px\].w-full.lg\:w-1\/2,
+  .fixed.right-3.top-\[-5px\].w-full.lg\:w-1\/2 {
     width: 100% !important;
     left: 0 !important;
     right: 0 !important;
