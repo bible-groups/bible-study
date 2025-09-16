@@ -1,5 +1,5 @@
 <template>
-  <div class="intro min-h-screen flex flex-col justify-center items-center bg-indigo-400">
+  <div class="intro min-h-screen flex flex-col justify-center items-center bg-indigo-400 overflow-hidden">
     <div class="intro-content text-white text-center">
       <div class="mb-8">
         <img src="/images/intro-icon.png" alt="Bible Story Logo" class="intro-logo w-24 h-24 mx-auto mb-8">
