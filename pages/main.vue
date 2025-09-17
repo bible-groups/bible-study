@@ -38,9 +38,9 @@
                   <div class="flex items-start justify-between">
                     <div class="flex-1">
                         <div class="flex items-center mb-2">
-                          <h3 class="text-md xl:text-lg font-semibold text-gray-900">{{ meditation.title }}</h3>
+                          <h3 class="text-md xl:text-lg font-semibold text-gray-900 line-clamp-1">{{ meditation.title }}</h3>
                         </div>
-                      <p class="text-gray-600 text-md leading-relaxed mb-3 line-clamp-3">
+                      <p class="text-gray-600 text-md leading-relaxed mb-3 line-clamp-1">
                         {{ meditation.body }}
                       </p>
                     </div>
