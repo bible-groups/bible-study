@@ -9,7 +9,7 @@
         <!-- 좌측 말씀묵상 검색결과 영역 -->
         <div class="main-left-result-area">
           <!-- 말씀묵상 목록 -->
-          <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
+          <div class="bg-indigo-50 rounded-lg border border-gray-200 overflow-hidden mb-6 h-[536px]">
             <!-- 로딩 상태 -->
             <div v-if="loading" class="text-center py-12">
               <div class="flex flex-col items-center justify-center">
@@ -267,7 +267,7 @@
         <!-- 우측 블로그 검색결과 영역 -->
         <div class="main-right-result-area">
           <!-- 블로그 목록 -->
-          <div class="bg-white rounded-lg border border-gray-200 overflow-hidden mb-6">
+          <div class="bg-indigo-50 h-[536px] rounded-lg border border-gray-200 overflow-hidden mb-6">
             <!-- 로딩 상태 -->
             <div v-if="blogLoading" class="text-center py-12">
               <div class="flex flex-col items-center justify-center">
